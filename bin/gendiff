@@ -12,13 +12,16 @@
 //     require_once $autoloadPath2;
 // }
 
-$doc = <<<DOC Generate diff.
+$doc = <<<DOC
+Generate diff.
 
 Usage: gendiff (-h|--help) gendiff (-v|--version)
 
 Options:
   -h --help     Show this screen.
   --version     Show version.
+
+DOC;
 
 require('/path/to/src/docopt.php');
 $argc = Docopt::handle($doc);`
