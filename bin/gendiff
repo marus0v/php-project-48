@@ -12,4 +12,15 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
+$doc = <<<DOC Generate diff.
+
+Usage: gendiff (-h|--help) gendiff (-v|--version)
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+
+require('/path/to/src/docopt.php');
+$argc = Docopt::handle($doc);`
+
 print_r('Hello, Gendiff');
