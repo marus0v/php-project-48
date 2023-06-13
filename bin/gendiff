@@ -20,10 +20,9 @@ Usage: gendiff (-h|--help) gendiff (-v|--version)
 Options:
   -h --help     Show this screen.
   --version     Show version.
-
 DOC;
 
-require('/path/to/src/docopt.php');
-$argc = Docopt::handle($doc);`
+// require('/path/to/src/docopt.php');
+// $argc = Docopt::handle($doc);`
 
 print_r('Hello, Gendiff');
