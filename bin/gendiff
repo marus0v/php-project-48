@@ -15,11 +15,16 @@ if (file_exists($autoloadPath1)) {
 $doc = <<<DOC
 Generate diff.
 
-Usage: gendiff (-h|--help) gendiff (-v|--version)
+Usage:
+    gendiff (-h|--help)
+    gendiff (-v|--version)
+    gendiff [--format <fmt>] <firstFile> <secondFile>
+
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
+  -h --help     Show this screen
+  --version     Show version
+  --format <fmt>                Report format [default: stylish]
 DOC;
 
 require('./vendor/docopt/docopt/src/docopt.php');
