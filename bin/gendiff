@@ -2,15 +2,15 @@
 
 <?php
 
-// $autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
 
-// $autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
 
-// if (file_exists($autoloadPath1)) {
-//     require_once $autoloadPath1;
-// } else {
-//     require_once $autoloadPath2;
-// }
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
+}
 
 $doc = <<<DOC
 Generate diff.
@@ -22,7 +22,7 @@ Options:
   --version     Show version.
 DOC;
 
-// require('/path/to/src/docopt.php');
-// $argc = Docopt::handle($doc);`
+require('./vendor/docopt/docopt/src/docopt.php');
+$argc = Docopt::handle($doc);
 
-print_r('Hello, Gendiff');
+// print_r('Hello, Gendiff');
