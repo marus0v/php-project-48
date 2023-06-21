@@ -13,8 +13,13 @@
     ],
     "require": {
         "docopt/docopt": "^1.0"
-    }
+    },
     "bin": [
         "bin/gendiff"
-    ]
+    ],
+    "autoload": {
+        "files": [
+            "src/gendiff.php"
+        ]
+    }
 }

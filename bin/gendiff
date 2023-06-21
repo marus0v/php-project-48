@@ -12,6 +12,8 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
+use function GenDiff\GenDiff\genDiff;
+
 $doc = <<<DOC
 Generate diff.
 
@@ -29,5 +31,9 @@ DOC;
 
 require('./vendor/docopt/docopt/src/docopt.php');
 $argc = Docopt::handle($doc);
+
+// var_dump($argv);
+
+genDiff($argv[1], $argv[2]);
 
 // print_r('Hello, Gendiff');
