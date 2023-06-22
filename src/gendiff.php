@@ -41,13 +41,11 @@ function genDiff($fileName1, $fileName2)
                 $resultString .= "  - " . $key . ": " . $value1 . "\n";
                 $resultString .= "  + " . $key . ": " . $value2 . "\n";
             }
-        } 
-        else if ((array_key_exists($key, $file1Array)) && (!array_key_exists($key, $file2Array))) {
+        } elseif ((array_key_exists($key, $file1Array)) && (!array_key_exists($key, $file2Array))) {
             $value1 = $file1Array[$key];
             $resultString .= "  - " . $key . ": " . $value1 . "\n";
             // данные только в первом json
-        }
-        else if ((!array_key_exists($key, $file1Array)) && (array_key_exists($key, $file2Array))) {
+        } elseif ((!array_key_exists($key, $file1Array)) && (array_key_exists($key, $file2Array))) {
             $value2 = $file2Array[$key];
             $resultString .= "  + " . $key . ": " . $value2 . "\n";
             // данные только во втором json
