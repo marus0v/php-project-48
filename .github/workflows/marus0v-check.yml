@@ -25,7 +25,7 @@ jobs:
           node-version: '14'
       - run: npm install -g bats
       - run: bats -v
-Run-Linter:
+  Run-Linter:
     runs-on: ubuntu-latest
     steps:
       - run: make lint
