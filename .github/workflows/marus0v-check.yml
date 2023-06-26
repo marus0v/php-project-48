@@ -28,4 +28,5 @@ jobs:
   Run-Linter:
     runs-on: ubuntu-latest
     steps:
-      - run: make lint
+        - uses: actions/checkout@v2
+        - uses: docker://github/super-linter:v2.1.0
