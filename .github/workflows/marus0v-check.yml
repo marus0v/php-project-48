@@ -1,4 +1,4 @@
-name: Marus0v Actions Tests
+name: Marus0v-Actions-Tests
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
