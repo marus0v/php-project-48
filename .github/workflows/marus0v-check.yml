@@ -30,3 +30,11 @@ jobs:
     steps:
         - uses: actions/checkout@v2
         - uses: docker://github/super-linter:v2.1.0
+  Run-Local-Linter:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: composer exec --verbose phpcs -- --standard=PSR12 src bin
+  Run-Tests:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: composer exec --verbose phpunit tests
