@@ -20,7 +20,8 @@
     ],
     "autoload": {
         "files": [
-            "src/gendiff.php"
+            "src/gendiff.php",
+            "tests/gendiffTest.php"
         ]
     }
 }
