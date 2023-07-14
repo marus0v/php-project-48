@@ -26,5 +26,10 @@
             "src/gendiff.php",
             "tests/gendiffTest.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     }
 }
