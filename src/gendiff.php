@@ -2,13 +2,18 @@
 
 namespace GenDiff\GenDiff;
 
-// use function cli\line;
-// use function cli\prompt;
-// use function BrainGames\Engine\runGame;
+function checkValueType($value)
+{
+    if (is_bool($value)) {
+        return strbool($value);
+    }
+    return $value;
+}
 
-// use const BrainGames\Engine\TOTALWINSNUMBER;
-
-// const DESCRIPTION = 'Answer "yes" if the number is even, otherwise answer "no".';
+function strbool($value)
+{
+    return $value ? 'true' : 'false';
+}
 
 function getArrayFromJson($fileName)
 {
@@ -19,6 +24,7 @@ function getArrayFromJson($fileName)
 function genDiff($fileName1, $fileName2)
 {
     $file1Array = getArrayFromJson($fileName1);
+    var_dump($file1Array);
     $file2Array = getArrayFromJson($fileName2);
     $file1ArrayKeys = array_keys($file1Array);
     $file2ArrayKeys = array_keys($file2Array);
@@ -35,19 +41,19 @@ function genDiff($fileName1, $fileName2)
             $value2 = $file2Array[$key];
             if ($value1 === $value2) {
             // данные одинаковые
-                $resultString .= "    " . $key . ": " . $value1 . "\n";
+                $resultString .= "    " . $key . ": " . checkValueType($value1) . "\n";
             } else {
             // данные отличаются
-                $resultString .= "  - " . $key . ": " . $value1 . "\n";
-                $resultString .= "  + " . $key . ": " . $value2 . "\n";
+                $resultString .= "  - " . $key . ": " . checkValueType($value1) . "\n";
+                $resultString .= "  + " . $key . ": " . checkValueType($value2) . "\n";
             }
         } elseif ((array_key_exists($key, $file1Array)) && (!array_key_exists($key, $file2Array))) {
             $value1 = $file1Array[$key];
-            $resultString .= "  - " . $key . ": " . $value1 . "\n";
+            $resultString .= "  - " . $key . ": " . checkValueType($value1) . "\n";
             // данные только в первом json
         } elseif ((!array_key_exists($key, $file1Array)) && (array_key_exists($key, $file2Array))) {
             $value2 = $file2Array[$key];
-            $resultString .= "  + " . $key . ": " . $value2 . "\n";
+            $resultString .= "  + " . $key . ": " . checkValueType($value2) . "\n";
             // данные только во втором json
         }
     }
