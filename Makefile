@@ -9,3 +9,6 @@ gendiff: # запустить gendiff
 
 lint: # установить CodeSniffer
 	composer exec --verbose phpcs -- --standard=PSR12 src bin
+
+test: # запустить test
+	composer test
