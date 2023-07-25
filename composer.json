@@ -16,7 +16,8 @@
         "test": "phpunit tests"
       },
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^6.3"
     },
     "bin": [
         "bin/gendiff"
