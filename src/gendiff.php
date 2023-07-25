@@ -2,6 +2,8 @@
 
 namespace GenDiff\GenDiff;
 
+use Symfony\Component\Yaml\Yaml;
+
 function checkValueType($value)
 {
     if (is_bool($value)) {
@@ -21,11 +23,32 @@ function getArrayFromJson($fileName)
     return $fileArray = json_decode($file, true);
 }
 
+function getArrayFromYAML($fileName)
+{
+    $file = Yaml::parseFile($fileName);
+    // return $fileArray = json_decode($file, true);
+    // var_dump($file);
+    return $file;
+}
+
+function parser($fileName)
+{
+    $extension = strrchr($fileName, '.');
+    // var_dump($extension);
+    if (($extension === '.yaml') || ($extension === '.yml')) {
+        $array = getArrayFromYAML($fileName);
+    }
+    else {
+        $array = getArrayFromJson($fileName);
+    }
+    return $array;
+}
+
 function genDiff($fileName1, $fileName2)
 {
-    $file1Array = getArrayFromJson($fileName1);
-    var_dump($file1Array);
-    $file2Array = getArrayFromJson($fileName2);
+    $file1Array = parser($fileName1);
+    // var_dump($file1Array);
+    $file2Array = parser($fileName2);
     $file1ArrayKeys = array_keys($file1Array);
     $file2ArrayKeys = array_keys($file2Array);
     // разобрали json на массивы

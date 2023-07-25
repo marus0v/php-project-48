@@ -18,5 +18,6 @@ class GenDiffTest extends TestCase
   + verbose: true
 }";
     $this->assertEquals($expected, genDiff('./src/file1.json', './src/file2.json'));
+    $this->assertEquals($expected, genDiff('./src/file1.yml', './src/file2.yml'));
     }
 }
