@@ -25,6 +25,7 @@
     "autoload": {
         "files": [
             "src/gendiff.php",
+            "src/parser.php",
             "tests/gendiffTest.php"
         ]
     },
