@@ -6,7 +6,6 @@ use Symfony\Component\Yaml\Yaml;
 // use GenDiff\Parser;
 
 // use function GenDiff\Parser\parse;
-
 const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
@@ -32,10 +31,10 @@ function getArrayFromJson($fileName)
 
 function getArrayFromYAML($fileName)
 {
-   $file = Yaml::parseFile($fileName);
+    $file = Yaml::parseFile($fileName);
     // return $fileArray = json_decode($file, true);
     // var_dump($file);
-   return $file;
+    return $file;
 }
 
 function parse($fileName)
@@ -43,9 +42,8 @@ function parse($fileName)
     $extension = strrchr($fileName, '.');
     // var_dump($extension);
     if (($extension === '.yaml') || ($extension === '.yml')) {
-       $array = getArrayFromYAML($fileName);
-    }
-    else {
+        $array = getArrayFromYAML($fileName);
+    } else {
         $array = getArrayFromJson($fileName);
     }
     return $array;
