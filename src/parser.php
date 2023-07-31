@@ -21,8 +21,7 @@ function parse($fileName)
     $extension = strrchr($fileName, '.');
     if (($extension === '.yaml') || ($extension === '.yml')) {
         $array = getArrayFromYAML($fileName);
-    }
-    else {
+    } else {
         $array = getArrayFromJson($fileName);
     }
     return $array;

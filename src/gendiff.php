@@ -4,7 +4,6 @@ namespace GenDiff\GenDiff;
 
 use Symfony\Component\Yaml\Yaml;
 // use GenDiff\Parser;
-
 // use function GenDiff\Parser\parse;
 const SPACE = '    ';
 const ADD = '  + ';
