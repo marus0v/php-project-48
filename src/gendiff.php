@@ -3,6 +3,13 @@
 namespace GenDiff\GenDiff;
 
 use Symfony\Component\Yaml\Yaml;
+// use GenDiff\Parser;
+
+// use function GenDiff\Parser\parse;
+
+const SPACE = '    ';
+const ADD = '  + ';
+const SUB = '  - ';
 
 function checkValueType($value)
 {
@@ -25,18 +32,18 @@ function getArrayFromJson($fileName)
 
 function getArrayFromYAML($fileName)
 {
-    $file = Yaml::parseFile($fileName);
+   $file = Yaml::parseFile($fileName);
     // return $fileArray = json_decode($file, true);
     // var_dump($file);
-    return $file;
+   return $file;
 }
 
-function parser($fileName)
+function parse($fileName)
 {
     $extension = strrchr($fileName, '.');
     // var_dump($extension);
     if (($extension === '.yaml') || ($extension === '.yml')) {
-        $array = getArrayFromYAML($fileName);
+       $array = getArrayFromYAML($fileName);
     }
     else {
         $array = getArrayFromJson($fileName);
@@ -46,9 +53,9 @@ function parser($fileName)
 
 function genDiff($fileName1, $fileName2)
 {
-    $file1Array = parser($fileName1);
+    $file1Array = parse($fileName1);
     // var_dump($file1Array);
-    $file2Array = parser($fileName2);
+    $file2Array = parse($fileName2);
     $file1ArrayKeys = array_keys($file1Array);
     $file2ArrayKeys = array_keys($file2Array);
     // разобрали json на массивы
@@ -64,19 +71,19 @@ function genDiff($fileName1, $fileName2)
             $value2 = $file2Array[$key];
             if ($value1 === $value2) {
             // данные одинаковые
-                $resultString .= "    " . $key . ": " . checkValueType($value1) . "\n";
+                $resultString .= SPACE . $key . ": " . checkValueType($value1) . "\n";
             } else {
             // данные отличаются
-                $resultString .= "  - " . $key . ": " . checkValueType($value1) . "\n";
-                $resultString .= "  + " . $key . ": " . checkValueType($value2) . "\n";
+                $resultString .= SUB . $key . ": " . checkValueType($value1) . "\n";
+                $resultString .= ADD . $key . ": " . checkValueType($value2) . "\n";
             }
         } elseif ((array_key_exists($key, $file1Array)) && (!array_key_exists($key, $file2Array))) {
             $value1 = $file1Array[$key];
-            $resultString .= "  - " . $key . ": " . checkValueType($value1) . "\n";
+            $resultString .= SUB . $key . ": " . checkValueType($value1) . "\n";
             // данные только в первом json
         } elseif ((!array_key_exists($key, $file1Array)) && (array_key_exists($key, $file2Array))) {
             $value2 = $file2Array[$key];
-            $resultString .= "  + " . $key . ": " . checkValueType($value2) . "\n";
+            $resultString .= ADD . $key . ": " . checkValueType($value2) . "\n";
             // данные только во втором json
         }
     }
