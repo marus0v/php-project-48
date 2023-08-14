@@ -62,7 +62,7 @@ function processArray($array, $level)
             // $subString .= processValue($key, $array);
             $subString .= $spacer . processValue($key, $array);
         } else {
-            // $level++;  
+            // $level++;
             // $subString .= SPACE . $key . ": {\n";
             $subString .= $key . ": {\n";
             $subString .= processArray($array[$key], $level);
@@ -98,7 +98,7 @@ function checkArraysDifferences(array $arr1, array $arr2, $level)
                 } else {
                 // данные отличаются
                     $subResult .= $spacer . SUB . processValue($key, $arr1);
-                    $subResult .= $spacer . ADD . processValue($key, $arr2);;
+                    $subResult .= $spacer . ADD . processValue($key, $arr2);
                 }
             } elseif ((is_array($arr1[$key])) && (!is_array($arr2[$key]))) {
                 // данные по ключу - значение и массив, отличаются
