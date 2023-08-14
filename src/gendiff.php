@@ -62,7 +62,7 @@ function processArray($array, $level)
             // $subString .= processValue($key, $array);
             $subString .= $spacer . processValue($key, $array);
         } else {
-            $level++;  
+            // $level++;  
             // $subString .= SPACE . $key . ": {\n";
             $subString .= $key . ": {\n";
             $subString .= processArray($array[$key], $level);
