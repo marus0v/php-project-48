@@ -114,7 +114,8 @@ function checkArraysDifferences(array $arr1, array $arr2, $level)
                 var_dump($level);
                 $subResult .= $spacer . SPACE . $key . ": {\n";
                 // $level++;
-                $subResult .= $spacer . checkArraysDifferences($arr1[$key], $arr2[$key], $level);
+                // $subResult .= $spacer . checkArraysDifferences($arr1[$key], $arr2[$key], $level);
+                $subResult .= checkArraysDifferences($arr1[$key], $arr2[$key], $level);
                 $subResult .= $spacer . SPACE . "}\n";
             }
         } elseif ((array_key_exists($key, $arr1)) && (!array_key_exists($key, $arr2))) {
