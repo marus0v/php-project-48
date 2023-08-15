@@ -59,7 +59,7 @@ function processArray($array, $level)
     $keyArray = array_keys($array);
     foreach ($keyArray as $key) {
         if (!is_array($array[$key])) {
-            $subString .= $spacer . processValue($key, $array);
+            $subString .= processValue($key, $array);
         } else {
             $subString .= $key . ": {\n";
             $subString .= processArray($array[$key], $level);
@@ -115,13 +115,11 @@ function checkArraysDifferences(array $arr1, array $arr2, $level)
             }
         } elseif ((!array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2))) {
             if (is_array($arr2[$key])) {
-                // var_dump($arr2[$key]);
                 $subResult .= $spacer . ADD . $key . ": {\n";
                 $subResult .= $spacer . SPACE . processArray($arr2[$key], $level);
                 $subResult .= $spacer . SPACE . "}\n";
             } else {
                 $subResult .= $spacer . ADD . processValue($key, $arr2);
-                // var_dump($subResult);
             // данные только во втором массиве
             }
         }
