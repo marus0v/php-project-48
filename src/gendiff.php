@@ -25,6 +25,11 @@ function strbool($value)
     return $value ? 'true' : 'false';
 }
 
+function toString($value)
+{
+    return trim(var_export($value, true), "'");
+}
+
 function getArrayFromJson($fileName)
 {
     $file = file_get_contents($fileName);
@@ -47,84 +52,106 @@ function parse($fileName)
     return $array;
 }
 
-function processValue($key, $array)
-{
-    return $key . ": " . checkValueType($array[$key]) . "\n";
-}
+// function processValue($key, $array)
+// {
+//     return $key . ": " . checkValueType($array[$key]) . "\n";
+// }
 
-function processArray($array, $level)
-{
-    $subString = '';
-    $spacer = str_repeat(SPACE, $level);
-    $keyArray = array_keys($array);
-    foreach ($keyArray as $key) {
-        if (!is_array($array[$key])) {
-            $subString .= processValue($key, $array);
-        } else {
-            $subString .= $key . ": {\n";
-            $subString .= processArray($array[$key], $level);
-            $subString .= "}\n";
-        }
-    }
-    return $subString;
-}
+// function processArray($array, $level)
+// {
+//     $subString = '';
+//     $spacer = str_repeat(SPACE, $level);
+//     $keyArray = array_keys($array);
+//     foreach ($keyArray as $key) {
+//         if (!is_array($array[$key])) {
+//            $subString .= processValue($key, $array);
+//         } else {
+//             $subString .= $key . ": {\n";
+//             $subString .= processArray($array[$key], $level);
+//             $subString .= "}\n";
+//         }
+//     }
+//     return $subString;
+// }
 
-function checkArraysDifferences(array $arr1, array $arr2, $level)
+function checkArraysDifferences(array $arr1, array $arr2)
 {
-    $spacer = str_repeat(SPACE, $level);
     $arrayKeys1 = array_keys($arr1);
     $arrayKeys2 = array_keys($arr2);
     $keyArray = array_unique(array_merge($arrayKeys1, $arrayKeys2));
     sort($keyArray);
     // почистили и отсортировали массив ключей
-    $subResult = '';
+    $subResult = [];
     foreach ($keyArray as $key) {
         // оба массива содержат данные по ключу
-        if ((array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2))) {
-            if ((!is_array($arr1[$key])) && (!is_array($arr2[$key]))) {
-                if ($arr1[$key] === $arr2[$key]) {
-                // данные одинаковые
-                    $subResult .= $spacer . SPACE . processValue($key, $arr1);
-                } else {
-                // данные отличаются
-                    $subResult .= $spacer . SUB . processValue($key, $arr1);
-                    $subResult .= $spacer . ADD . processValue($key, $arr2);
-                }
-            } elseif ((is_array($arr1[$key])) && (!is_array($arr2[$key]))) {
-                // данные по ключу - значение и массив, отличаются
-                $subResult .= $spacer . SUB . processArray($arr1[$key], $level);
-                $subResult .= $spacer . ADD . processValue($key, $arr2);
-            } elseif ((!is_array($arr1[$key])) && (is_array($arr2[$key]))) {
-                // данные по ключу - значение и массив, отличаются
-                $subResult .= $spacer . SUB . processValue($key, $arr1);
-                $subResult .= $spacer . ADD . processArray($arr2[$key], $level);
-            } else {
-                $level++;
-                $subResult .= $spacer . SPACE . $key . ": {\n";
-                $subResult .= checkArraysDifferences($arr1[$key], $arr2[$key], $level);
-                $subResult .= $spacer . SPACE . "}\n";
-            }
-        } elseif ((array_key_exists($key, $arr1)) && (!array_key_exists($key, $arr2))) {
-            if (is_array($arr1[$key])) {
-                $subResult .= $spacer . SUB . $key . ": {\n";
-                $subResult .= $spacer . SPACE . processArray($arr1[$key], $level);
-                $subResult .= $spacer . SPACE . "}\n";
-            } else {
-                $subResult .= $spacer . SUB . processValue($key, $arr1);
-            // данные только в первом массиве
-            }
-        } elseif ((!array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2))) {
-            if (is_array($arr2[$key])) {
-                $subResult .= $spacer . ADD . $key . ": {\n";
-                $subResult .= $spacer . SPACE . processArray($arr2[$key], $level);
-                $subResult .= $spacer . SPACE . "}\n";
-            } else {
-                $subResult .= $spacer . ADD . processValue($key, $arr2);
-            // данные только во втором массиве
-            }
+        if ((array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2)) && is_array($arr1[$key]) && is_array($arr2[$key])) {
+            $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
+            $subResult[SPACE] = $comparison;
+        } elseif (!array_key_exists($key, $arr2)) {
+            $subResult[SUB . $key] = $arr1[$key];
+        } elseif (!array_key_exists($key, $arr1)) {
+            $subResult[ADD . $key] = $arr2[$key];
+        } elseif (($arr1[$key] !== $arr2[$key])) {
+            $subResult[SUB . $key] = $arr1[$key];
+            $subResult[ADD . $key] = $arr2[$key];
+        } else {
+            $subResult[SPACE . $key] = $arr1[$key];
+        }
+    }
+    var_dump($subResult);
+    return $subResult;
+}
+
+function processValue($value)
+{
+    if (is_bool($value)) {
+        $result = toString(strbool($value));
+    } else {
+        $result = toString($value);
+    }
+    return $result;
+}
+
+function processArray($subValue, $spacer, $level)
+{
+    $subResult = '';
+    $newString = '';
+    $keysArray = array_keys($subValue);
+    foreach ($keysArray as $key) {
+        if (!is_array($subValue[$key])) {
+            $newString = str_repeat($spacer, $level) . $key . ": " . processValue($subValue[$key]) . "\n";
+            $subResult .= $spacer . $newString;
+        } else {
+            $level++;
+            $subResult .= str_repeat($spacer, $level) . $key . ": {\n";
+            $subResult .= processArray($subValue[$key], $spacer, $level);
+            $subResult .= str_repeat($spacer, $level) . "}\n";
         }
     }
     return $subResult;
+}
+
+function stringify($value, $replacer = ' ', $spacesCount = 0)
+{
+    $spacer = str_repeat($replacer, $spacesCount);
+    $level = 0;
+    if (!is_array($value)) {
+        $result = trim($spacer) . processValue($value);
+    } else {
+        $keysArray = array_keys($value);
+        $result = "{\n";
+        foreach ($keysArray as $key) {
+            if (!is_array($value[$key])) {
+                $result .= $key . ": " . processValue($value[$key]) . "\n";
+            } else {
+                $result .= $key . ": {\n";
+                $result .= processArray($value[$key], $spacer, $level);
+                $result .= str_repeat($spacer, $level) . "}\n";
+            }
+        }
+        $result .= "}";
+    }
+    return $result;
 }
 
 function genDiff($fileName1, $fileName2)
@@ -133,10 +160,10 @@ function genDiff($fileName1, $fileName2)
     // $spacer = str_repeat(SPACE, $level);
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
-    $resultString = "{\n";
+    // $resultString = "{\n";
     // размечаем строку
-    $resultString .= checkArraysDifferences($file1Array, $file2Array, $level);
-    $resultString .= "}";
+    $resultString = stringify(checkArraysDifferences($file1Array, $file2Array), $replacer = ' ', $spacesCount = 1);
+    // $resultString .= "}";
     // дополняем строку
     return $resultString;
 }
