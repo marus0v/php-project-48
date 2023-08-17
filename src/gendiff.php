@@ -82,11 +82,13 @@ function checkArraysDifferences(array $arr1, array $arr2)
     sort($keyArray);
     // почистили и отсортировали массив ключей
     $subResult = [];
+    // var_dump($keyArray);
     foreach ($keyArray as $key) {
         // оба массива содержат данные по ключу
         if ((array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2)) && is_array($arr1[$key]) && is_array($arr2[$key])) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
-            $subResult[SPACE] = $comparison;
+            var_dump($key);
+            $subResult[SPACE . $key] = $comparison;
         } elseif (!array_key_exists($key, $arr2)) {
             $subResult[SUB . $key] = $arr1[$key];
         } elseif (!array_key_exists($key, $arr1)) {
@@ -98,7 +100,7 @@ function checkArraysDifferences(array $arr1, array $arr2)
             $subResult[SPACE . $key] = $arr1[$key];
         }
     }
-    var_dump($subResult);
+    // var_dump($subResult);
     return $subResult;
 }
 
@@ -131,12 +133,12 @@ function processArray($subValue, $spacer, $level)
     return $subResult;
 }
 
-function stringify($value, $replacer = ' ', $spacesCount = 0)
+function stringify($value)
 {
-    $spacer = str_repeat($replacer, $spacesCount);
-    $level = 0;
+    $level = 1;
+    $spacer = str_repeat(SPACE, $level);
     if (!is_array($value)) {
-        $result = trim($spacer) . processValue($value);
+        $result = $spacer . processValue($value);
     } else {
         $keysArray = array_keys($value);
         $result = "{\n";
@@ -146,7 +148,7 @@ function stringify($value, $replacer = ' ', $spacesCount = 0)
             } else {
                 $result .= $key . ": {\n";
                 $result .= processArray($value[$key], $spacer, $level);
-                $result .= str_repeat($spacer, $level) . "}\n";
+                $result .= $spacer . "}\n";
             }
         }
         $result .= "}";
@@ -162,7 +164,7 @@ function genDiff($fileName1, $fileName2)
     $file2Array = parse($fileName2);
     // $resultString = "{\n";
     // размечаем строку
-    $resultString = stringify(checkArraysDifferences($file1Array, $file2Array), $replacer = ' ', $spacesCount = 1);
+    $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
     // $resultString .= "}";
     // дополняем строку
     return $resultString;
