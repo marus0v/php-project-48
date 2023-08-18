@@ -137,7 +137,6 @@ function processArray($subValue, $level)
 function stringify($value)
 {
     $level = 1;
-    
     $spacer = str_repeat(SPACE, $level);
     if (!is_array($value)) {
         $result = str_repeat(SPACE, $level) . processValue($value);
