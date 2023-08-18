@@ -107,27 +107,28 @@ function checkArraysDifferences(array $arr1, array $arr2)
 function processValue($value)
 {
     if (is_bool($value)) {
-        $result = toString(strbool($value));
+        $result = checkValueType(strbool($value));
     } else {
-        $result = toString($value);
+        $result = checkValueType($value);
     }
     return $result;
 }
 
-function processArray($subValue, $spacer, $level)
+function processArray($subValue, $level)
 {
     $subResult = '';
     $newString = '';
     $keysArray = array_keys($subValue);
     foreach ($keysArray as $key) {
         if (!is_array($subValue[$key])) {
-            $newString = str_repeat($spacer, $level) . $key . ": " . processValue($subValue[$key]) . "\n";
-            $subResult .= $spacer . $newString;
+            $newString = str_repeat(SPACE, $level) . $key . ": " . processValue($subValue[$key]) . "\n";
+//             $subResult .= str_repeat(SPACE, $level) . $newString;
+            $subResult .= $newString;
         } else {
             $level++;
-            $subResult .= str_repeat($spacer, $level) . $key . ": {\n";
-            $subResult .= processArray($subValue[$key], $spacer, $level);
-            $subResult .= str_repeat($spacer, $level) . "}\n";
+            $subResult .= str_repeat(SPACE, $level) . $key . ": {\n";
+            $subResult .= processArray($subValue[$key], $level);
+            $subResult .= str_repeat(SPACE, $level) . "}\n";
         }
     }
     return $subResult;
@@ -136,9 +137,10 @@ function processArray($subValue, $spacer, $level)
 function stringify($value)
 {
     $level = 1;
+    
     $spacer = str_repeat(SPACE, $level);
     if (!is_array($value)) {
-        $result = $spacer . processValue($value);
+        $result = str_repeat(SPACE, $level) . processValue($value);
     } else {
         $keysArray = array_keys($value);
         $result = "{\n";
@@ -147,8 +149,8 @@ function stringify($value)
                 $result .= $key . ": " . processValue($value[$key]) . "\n";
             } else {
                 $result .= $key . ": {\n";
-                $result .= processArray($value[$key], $spacer, $level);
-                $result .= $spacer . "}\n";
+                $result .= str_repeat(SPACE, $level) . processArray($value[$key], $level);
+                $result .= str_repeat(SPACE, $level) . "}\n";
             }
         }
         $result .= "}";
