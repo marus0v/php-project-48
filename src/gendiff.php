@@ -10,24 +10,9 @@ const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
 
-function checkValueType($value)
-{
-    if (is_bool($value)) {
-        $value = strbool($value);
-    } elseif (is_null($value)) {
-        $value = 'null';
-    }
-    return $value;
-}
-
 function strbool($value)
 {
     return $value ? 'true' : 'false';
-}
-
-function toString($value)
-{
-    return trim(var_export($value, true), "'");
 }
 
 function getArrayFromJson($fileName)
@@ -52,28 +37,6 @@ function parse($fileName)
     return $array;
 }
 
-// function processValue($key, $array)
-// {
-//     return $key . ": " . checkValueType($array[$key]) . "\n";
-// }
-
-// function processArray($array, $level)
-// {
-//     $subString = '';
-//     $spacer = str_repeat(SPACE, $level);
-//     $keyArray = array_keys($array);
-//     foreach ($keyArray as $key) {
-//         if (!is_array($array[$key])) {
-//            $subString .= processValue($key, $array);
-//         } else {
-//             $subString .= $key . ": {\n";
-//             $subString .= processArray($array[$key], $level);
-//             $subString .= "}\n";
-//         }
-//     }
-//     return $subString;
-// }
-
 function checkArraysDifferences(array $arr1, array $arr2)
 {
     $arrayKeys1 = array_keys($arr1);
@@ -85,7 +48,7 @@ function checkArraysDifferences(array $arr1, array $arr2)
     // var_dump($keyArray);
     foreach ($keyArray as $key) {
         // оба массива содержат данные по ключу
-        if ((array_key_exists($key, $arr1)) && (array_key_exists($key, $arr2)) && is_array($arr1[$key]) && is_array($arr2[$key])) {
+        if (array_key_exists($key, $arr1) && array_key_exists($key, $arr2) && is_array($arr1[$key]) && is_array($arr2[$key])) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
             var_dump($key);
             $subResult[SPACE . $key] = $comparison;
@@ -107,11 +70,11 @@ function checkArraysDifferences(array $arr1, array $arr2)
 function processValue($value)
 {
     if (is_bool($value)) {
-        $result = checkValueType(strbool($value));
-    } else {
-        $result = checkValueType($value);
+        $value = strbool($value);
+    } elseif (is_null($value)) {
+        $value = 'null';
     }
-    return $result;
+    return $value;
 }
 
 function processArray($subValue, $level)
@@ -159,14 +122,9 @@ function stringify($value)
 
 function genDiff($fileName1, $fileName2)
 {
-    $level = 0;
-    // $spacer = str_repeat(SPACE, $level);
+    // $level = 0;
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
-    // $resultString = "{\n";
-    // размечаем строку
     $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
-    // $resultString .= "}";
-    // дополняем строку
     return $resultString;
 }
