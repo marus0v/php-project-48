@@ -47,19 +47,28 @@ function checkArraysDifferences(array $arr1, array $arr2)
     $subResult = [];
     // var_dump($keyArray);
     foreach ($keyArray as $key) {
-        // оба массива содержат данные по ключу
-        if (array_key_exists($key, $arr1) && array_key_exists($key, $arr2) && is_array($arr1[$key]) && is_array($arr2[$key])) {
+        // оба массива содержат данные по ключу и данные - массивы
+        if (
+            array_key_exists($key, $arr1) &&
+            array_key_exists($key, $arr2) &&
+            is_array($arr1[$key]) &&
+            is_array($arr2[$key])
+            ) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
             var_dump($key);
             $subResult[SPACE . $key] = $comparison;
         } elseif (!array_key_exists($key, $arr2)) {
+            // данные только в первом массиве
             $subResult[SUB . $key] = $arr1[$key];
         } elseif (!array_key_exists($key, $arr1)) {
+            // данные только во втором массиве
             $subResult[ADD . $key] = $arr2[$key];
         } elseif (($arr1[$key] !== $arr2[$key])) {
+            // оба массива содержат данные по ключу и данные - разные значения
             $subResult[SUB . $key] = $arr1[$key];
             $subResult[ADD . $key] = $arr2[$key];
         } else {
+            // оба массива содержат данные по ключу и данные - одинаковые значения
             $subResult[SPACE . $key] = $arr1[$key];
         }
     }
