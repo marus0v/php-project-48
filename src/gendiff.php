@@ -53,7 +53,7 @@ function checkArraysDifferences(array $arr1, array $arr2)
             array_key_exists($key, $arr2) &&
             is_array($arr1[$key]) &&
             is_array($arr2[$key])
-            ) {
+        ) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
             var_dump($key);
             $subResult[SPACE . $key] = $comparison;
