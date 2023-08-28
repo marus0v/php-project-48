@@ -59,20 +59,20 @@ function checkArraysDifferences(array $arr1, array $arr2)
         ) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
             var_dump($key);
-            $subResult[$key][SPACE] = [$comparison];
+            $subResult[$key][SPACE] = $comparison;
         } elseif (!array_key_exists($key, $arr2)) {
             // данные только в первом массиве
-            $subResult[$key][SUB] = [$arr1[$key]];
+            $subResult[$key][SUB] = $arr1[$key];
         } elseif (!array_key_exists($key, $arr1)) {
             // данные только во втором массиве
-            $subResult[$key][ADD] = [$arr2[$key]];
+            $subResult[$key][ADD] = $arr2[$key];
         } elseif (($arr1[$key] !== $arr2[$key])) {
             // оба массива содержат данные по ключу и данные - разные значения
-            $subResult[$key][SUB] = [$arr1[$key]];
-            $subResult[$key][ADD] = [$arr2[$key]];
+            $subResult[$key][SUB] = $arr1[$key];
+            $subResult[$key][ADD] = $arr2[$key];
         } else {
             // оба массива содержат данные по ключу и данные - одинаковые значения
-            $subResult[$key][SPACE] = [$arr1[$key]];
+            $subResult[$key][SPACE] = $arr1[$key];
         }
     }
     var_dump($subResult);
@@ -106,15 +106,19 @@ function processArray($subValue, $level)
     //        $subResult .= str_repeat(SPACE, $level) . "}\n";
     //    }
     //}
-    foreach ($keysArray as $key => $value) {
-        foreach ($value as $subKey => $subValue) {
+    foreach ($keysArray as $key) {
+        var_dump($key);
+        $subSubValue = $subValue[$key];
+        foreach ($subSubValue as $subKey => $subSubSubValue) {
+            var_dump($subValue[$key]);
             var_dump($subKey);
-            if (!is_array($subValue[$subkey])) {
-                $subResult .= $subkey . $key . ": " . processValue($subValue[$subkey]) . "\n";
+            var_dump($subSubSubValue);
+            if (!is_array($subSubSubValue)) {
+                $subResult .= $subKey . $key . ": " . processValue($subSubSubValue) . "\n";
+                var_dump($subResult);
             }
         }
     }
-    var_dump($subResult);
     return $subResult;
 }
 
@@ -126,19 +130,19 @@ function stringify($value)
 //         $result = str_repeat(SPACE, $level) . processValue($value);
         $result = processValue($value);
     } else {
-        $keysArray = array_keys($value);
-        var_dump($keysArray);
+//        $keysArray = array_keys($value);
+//        var_dump($keysArray);
         $result = "{\n";
-        foreach ($keysArray as $key) {
-            if (!is_array($value[$key])) {
-                $result .= $key . ": " . processValue($value[$key]) . "\n";
-            } else {
-        //        $result .= $key . ": {\n";
+//        foreach ($keysArray as $key) {
+//            if (!is_array($value[$key])) {
+//                $result .= $key . ": " . processValue($value[$key]) . "\n";
+//            } else {
+//        //        $result .= $key . ": {\n";
         //        $result .= str_repeat(SPACE, $level) . processArray($value[$key], $level);
-                $result .= processArray($value[$key], $level);
+                $result .= processArray($value, $level);
         //        $result .= str_repeat(SPACE, $level) . "}\n";
-            }
-        }
+//            }
+//        }
         $result .= "}";
     }
     return $result;
