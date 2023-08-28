@@ -135,7 +135,7 @@ function stringify($value)
             } else {
         //        $result .= $key . ": {\n";
         //        $result .= str_repeat(SPACE, $level) . processArray($value[$key], $level);
-        $result .= processArray($value[$key], $level);
+                $result .= processArray($value[$key], $level);
         //        $result .= str_repeat(SPACE, $level) . "}\n";
             }
         }
