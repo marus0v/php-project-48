@@ -94,28 +94,24 @@ function processArray($subValue, $level)
     $subResult = '';
     $newString = '';
     $keysArray = array_keys($subValue);
-    // foreach ($keysArray as $key) {
-    //    if (!is_array($subValue[$key])) {
-    // $newString = str_repeat(SPACE, $level) . $key . ": " . processValue($subValue[$key]) . "\n";
-//             $subResult .= str_repeat(SPACE, $level) . $newString;
-    //        $subResult .= $newString;
-    //    } else {
-    //        $level++;
-    //        $subResult .= str_repeat(SPACE, $level) . $key . ": {\n";
-    //        $subResult .= processArray($subValue[$key], $level);
-    //        $subResult .= str_repeat(SPACE, $level) . "}\n";
-    //    }
-    //}
     foreach ($keysArray as $key) {
         var_dump($key);
+        var_dump($level);
         $subSubValue = $subValue[$key];
         foreach ($subSubValue as $subKey => $subSubSubValue) {
-            var_dump($subValue[$key]);
-            var_dump($subKey);
-            var_dump($subSubSubValue);
+            // var_dump($subValue[$key]);
+            // var_dump($subKey);
+            // var_dump($subSubSubValue);
             if (!is_array($subSubSubValue)) {
-                $subResult .= $subKey . $key . ": " . processValue($subSubSubValue) . "\n";
+                $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": " . processValue($subSubSubValue) . "\n";
                 var_dump($subResult);
+            } else {
+                var_dump($key);
+                var_dump($level);
+                $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": {\n";
+                $level++;
+                $subResult .= str_repeat(SPACE, $level) . processArray($subSubSubValue, $level);
+                $subResult .= str_repeat(SPACE, $level) . "}\n";
             }
         }
     }
@@ -124,25 +120,12 @@ function processArray($subValue, $level)
 
 function stringify($value)
 {
-    $level = 1;
-    // $spacer = str_repeat(SPACE, $level);
+    $level = 0;
     if (!is_array($value)) {
-//         $result = str_repeat(SPACE, $level) . processValue($value);
         $result = processValue($value);
     } else {
-//        $keysArray = array_keys($value);
-//        var_dump($keysArray);
         $result = "{\n";
-//        foreach ($keysArray as $key) {
-//            if (!is_array($value[$key])) {
-//                $result .= $key . ": " . processValue($value[$key]) . "\n";
-//            } else {
-//        //        $result .= $key . ": {\n";
-        //        $result .= str_repeat(SPACE, $level) . processArray($value[$key], $level);
-                $result .= processArray($value, $level);
-        //        $result .= str_repeat(SPACE, $level) . "}\n";
-//            }
-//        }
+        $result .= processArray($value, $level);
         $result .= "}";
     }
     return $result;
