@@ -5,7 +5,8 @@ namespace GenDiff\GenDiff;
 use Symfony\Component\Yaml\Yaml;
 
 // use GenDiff\Parser;
-// use function GenDiff\Parser\parse;
+use function GenDiff\Parser\parse;
+
 const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
@@ -29,16 +30,16 @@ function getArrayFromYAML($fileName)
     return Yaml::parseFile($fileName);
 }
 
-function parse($fileName)
-{
-    $extension = strrchr($fileName, '.');
-    if (($extension === '.yaml') || ($extension === '.yml')) {
-        $array = getArrayFromYAML($fileName);
-    } else {
-        $array = getArrayFromJson($fileName);
-    }
-    return $array;
-}
+// function parse($fileName)
+// {
+//    $extension = strrchr($fileName, '.');
+//    if (($extension === '.yaml') || ($extension === '.yml')) {
+//        $array = getArrayFromYAML($fileName);
+//    } else {
+//        $array = getArrayFromJson($fileName);
+//    }
+//    return $array;
+//}
 
 function checkArraysDifferences(array $arr1, array $arr2)
 {
@@ -109,8 +110,8 @@ function processArray($subValue, $level)
                 var_dump($key);
                 var_dump($level);
                 $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": {\n";
-                $level++;
-                $subResult .= str_repeat(SPACE, $level) . processArray($subSubSubValue, $level);
+                // $level++;
+                $subResult .= processArray($subSubSubValue, $level += 1);
                 $subResult .= str_repeat(SPACE, $level) . "}\n";
             }
         }
