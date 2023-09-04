@@ -5,7 +5,7 @@ namespace GenDiff\GenDiff;
 use Symfony\Component\Yaml\Yaml;
 
 // use GenDiff\Parser;
-use function GenDiff\Parser\parse;
+// use function GenDiff\Parser\parse;
 
 const SPACE = '    ';
 const ADD = '  + ';
@@ -30,16 +30,16 @@ function getArrayFromYAML($fileName)
     return Yaml::parseFile($fileName);
 }
 
-// function parse($fileName)
-// {
-//    $extension = strrchr($fileName, '.');
-//    if (($extension === '.yaml') || ($extension === '.yml')) {
-//        $array = getArrayFromYAML($fileName);
-//    } else {
-//        $array = getArrayFromJson($fileName);
-//    }
-//    return $array;
-//}
+function parse($fileName)
+{
+    $extension = strrchr($fileName, '.');
+    if (($extension === '.yaml') || ($extension === '.yml')) {
+        $array = getArrayFromYAML($fileName);
+    } else {
+        $array = getArrayFromJson($fileName);
+    }
+    return $array;
+}
 
 function checkArraysDifferences(array $arr1, array $arr2)
 {
@@ -93,11 +93,11 @@ function processValue($value)
 function processArray($subValue, $level)
 {
     $subResult = '';
-    $newString = '';
+    // $newString = '';
     $keysArray = array_keys($subValue);
     foreach ($keysArray as $key) {
-        var_dump($key);
-        var_dump($level);
+        // var_dump($key);
+        // var_dump($level);
         $subSubValue = $subValue[$key];
         foreach ($subSubValue as $subKey => $subSubSubValue) {
             // var_dump($subValue[$key]);
@@ -105,7 +105,7 @@ function processArray($subValue, $level)
             // var_dump($subSubSubValue);
             if (!is_array($subSubSubValue)) {
                 $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": " . processValue($subSubSubValue) . "\n";
-                var_dump($subResult);
+                // var_dump($subResult);
             } else {
                 var_dump($key);
                 var_dump($level);
@@ -113,6 +113,7 @@ function processArray($subValue, $level)
                 // $level++;
                 $subResult .= processArray($subSubSubValue, $level += 1);
                 $subResult .= str_repeat(SPACE, $level) . "}\n";
+                $level--;
             }
         }
     }
