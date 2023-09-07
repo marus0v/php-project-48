@@ -62,7 +62,7 @@ function showFormatted($differ, $formatName)
         //    return  getPlainDiff($diff);
         // case 'json':
         //    return getJsonDiff($diff);
-        // case 'stylish':
+        case 'stylish':
             return stringify($differ);
         default:
             throw new \Exception("Unknown format: $formatName");
