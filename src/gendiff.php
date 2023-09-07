@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 
 // use GenDiff\Parser;
 // use function GenDiff\Parser\parse;
-use function GenDiff\Formatters\showFormatted;
+// use function GenDiff\Formatters\showFormatted;
 
 const SPACE = '    ';
 const ADD = '  + ';
@@ -60,7 +60,7 @@ function checkArraysDifferences(array $arr1, array $arr2): array
             is_array($arr2[$key])
         ) {
             $comparison = checkArraysDifferences($arr1[$key], $arr2[$key]);
-            var_dump($key);
+            // var_dump($key);
             $subResult[$key][SPACE] = $comparison;
         } elseif (!array_key_exists($key, $arr2)) {
             // данные только в первом массиве
@@ -97,7 +97,7 @@ function checkArraysDifferences(array $arr1, array $arr2): array
             $subResult[$key][SPACE] = $arr1[$key];
         }
     }
-    var_dump($subResult);
+    // var_dump($subResult);
     return $subResult;
 }
 
@@ -128,8 +128,8 @@ function processArray($subValue, $level)
                 $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": " . processValue($subSubSubValue) . "\n";
                 // var_dump($subResult);
             } else {
-                var_dump($key);
-                var_dump($level);
+                // var_dump($key);
+                // var_dump($level);
                 $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": {\n";
                 // $level++;
                 $subResult .= processArray($subSubSubValue, $level += 1);
@@ -154,9 +154,22 @@ function stringify($value)
     return $result;
 }
 
+function showFormatted($differ, $formatName)
+{
+    switch ($formatName) {
+        // case 'plain':
+        //    return  showPlain($differ);
+        // case 'json':
+        //    return showJson($differ);
+        case 'stylish':
+            return stringify($differ);
+        default:
+            throw new \Exception("Unknown format: $formatName");
+    }
+}
+
 function genDiff($fileName1, $fileName2, $formatName)
 {
-    // $level = 0;
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
     $differ = checkArraysDifferences($file1Array, $file2Array);
