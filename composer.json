@@ -24,8 +24,9 @@
     ],
     "autoload": {
         "files": [
-            "src/parser.php",
+            "src/Parser.php",
             "src/gendiff.php",
+            "src/Formatters.php",
             "tests/gendiffTest.php"
         ]
     },

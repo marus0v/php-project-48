@@ -30,10 +30,14 @@ Options:
 DOC;
 
 require('./vendor/docopt/docopt/src/docopt.php');
-$argc = Docopt::handle($doc);
+// $argc = Docopt::handle($doc);
+$args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
 
 // var_dump($argv);
+$fileName1 = $args['<firstFile>'];
+$fileName2 = $args['<secondFile>'];
+$formatName = $args['--format'];
 
-genDiff($argv[1], $argv[2]);
+genDiff($pathToFile1, $pathToFile2);
 
 // print_r('Hello, Gendiff');

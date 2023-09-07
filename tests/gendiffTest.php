@@ -4,6 +4,7 @@ namespace GenDiff\Tests;
 
 use PHPUnit\Framework\TestCase;
 use function GenDiff\GenDiff\genDiff;
+use function GenDiff\Formatters\showFormatted;
 
 class GenDiffTest extends TestCase
 {
@@ -17,8 +18,8 @@ class GenDiffTest extends TestCase
   + timeout: 20
   + verbose: true
 }";
-    $this->assertEquals($expected1, genDiff('./src/file1.json', './src/file2.json'));
-    $this->assertEquals($expected1, genDiff('./src/file1.yml', './src/file2.yml'));
+    $this->assertEquals($expected1, genDiff('./src/file1.json', './src/file2.json', 'stylish'));
+    $this->assertEquals($expected1, genDiff('./src/file1.yml', './src/file2.yml', 'stylish'));
     $expected2 = "{
     common: {
       + follow: false
@@ -63,7 +64,7 @@ class GenDiffTest extends TestCase
         fee: 100500
     }
 }";
-    $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json'));
-    $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml'));
+    $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json', 'stylish'));
+    $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml', 'stylish'));
     }
 }

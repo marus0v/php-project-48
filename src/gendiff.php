@@ -6,6 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 
 // use GenDiff\Parser;
 // use function GenDiff\Parser\parse;
+use function GenDiff\Formatters\showFormatted;
 
 const SPACE = '    ';
 const ADD = '  + ';
@@ -41,7 +42,7 @@ function parse($fileName)
     return $array;
 }
 
-function checkArraysDifferences(array $arr1, array $arr2)
+function checkArraysDifferences(array $arr1, array $arr2): array
 {
     $arrayKeys1 = array_keys($arr1);
     $arrayKeys2 = array_keys($arr2);
@@ -153,11 +154,13 @@ function stringify($value)
     return $result;
 }
 
-function genDiff($fileName1, $fileName2)
+function genDiff($fileName1, $fileName2, $formatName)
 {
     // $level = 0;
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
-    $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
+    $differ = checkArraysDifferences($file1Array, $file2Array);
+    // $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
+    $resultString = showFormatted($differ, $formatName);
     return $resultString;
 }
