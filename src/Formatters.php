@@ -59,9 +59,9 @@ function showFormatted($differ, $formatName)
 {
     switch ($formatName) {
         // case 'plain':
-        //    return  getPlainDiff($diff);
+        //    return  showPlain($differ);
         // case 'json':
-        //    return getJsonDiff($diff);
+        //    return showJson($differ);
         case 'stylish':
             return stringify($differ);
         default:
