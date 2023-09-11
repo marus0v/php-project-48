@@ -33,7 +33,7 @@ class GenDiffTest extends TestCase
         }
         setting6: {
             doge: {
-              - wow: 
+              - wow:
               + wow: so much
             }
             key: value
@@ -66,5 +66,19 @@ class GenDiffTest extends TestCase
 }";
     $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json', 'stylish'));
     $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml', 'stylish'));
+  $expected3 = "{
+Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]
+}";
+    $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain')); 
     }
 }

@@ -4,9 +4,8 @@ namespace GenDiff\GenDiff;
 
 use Symfony\Component\Yaml\Yaml;
 
-// use GenDiff\Parser;
-// use function GenDiff\Parser\parse;
-// use function GenDiff\Formatters\showFormatted;
+use function GenDiff\Parser\parse;
+use function GenDiff\Formatters\showFormatted;
 
 const SPACE = '    ';
 const ADD = '  + ';
@@ -20,26 +19,34 @@ function strbool($value)
     return $value ? 'true' : 'false';
 }
 
-function getArrayFromJson($fileName)
+function findArraysDiff(array $arr1, array $arr2): array
 {
-    $file = file_get_contents($fileName);
-    return $fileArray = json_decode($file, true);
-}
+    $arrayKeys1 = array_keys($arr1);
+    $arrayKeys2 = array_keys($arr2);
+    $keyArray = array_unique(array_merge($arrayKeys1, $arrayKeys2));
+    sort($keyArray);
 
-function getArrayFromYAML($fileName)
-{
-    return Yaml::parseFile($fileName);
-}
+    $result = [];
 
-function parse($fileName)
-{
-    $extension = strrchr($fileName, '.');
-    if (($extension === '.yaml') || ($extension === '.yml')) {
-        $array = getArrayFromYAML($fileName);
-    } else {
-        $array = getArrayFromJson($fileName);
+    foreach ($keyArray as $key) {
+        if (!array_key_exists($key, $arr1)) {
+            $result[$key] = ['status' => 'added', 'value' => $arr2[$key]];
+        } elseif (!array_key_exists($key, $arr2)) {
+            $result[$key] = ['status' => 'removed', 'value' => $arr1[$key]];
+        } elseif (is_array($arr1[$key]) && is_array($arr2[$key])) {
+            $result[$key] = ['status' => 'nested', 'children' => findArraysDiff($arr1[$key], $arr2[$key])];
+        } elseif ($arr1[$key] !== $arr2[$key]) {
+            $result[$key] = [
+                'status' => 'updated',
+                'oldValue' => $arr1[$key],
+                'newValue' => $arr2[$key],
+            ];
+        } else {
+            $result[$key] = ['status' => 'unchanged', 'value' => $arr1[$key]];
+        }
     }
-    return $array;
+
+    return $result;
 }
 
 function checkArraysDifferences(array $arr1, array $arr2): array
@@ -160,7 +167,7 @@ function processArray2Plain($value)
     $subResult = "";
     $keysArray = array_keys($value);
     foreach ($keysArray as $key) {
-        var_dump($key);
+        // var_dump($key);
         // var_dump($level);
         $subValue = $value[$key];
         foreach ($subValue as $subKey => $subSubValue) {
@@ -171,14 +178,14 @@ function processArray2Plain($value)
                 $subResult .= "Property '". $key . "." . $subKey . " was added with value: " . processValue($subSubSubValue) . "\n";
                 // var_dump($subResult);
             } else {
-                var_dump($key);
-                var_dump($subKey);
-                var_dump($subSubValue);
+                //var_dump($key);
+                //var_dump($subKey);
+                //var_dump($subSubValue);
                 // var_dump($subSubValue[$subKey]);
                 foreach ($subSubValue as $subSubKey => $subSubSubValue) {
-                    var_dump($subSubKey);
-                    var_dump($subSubSubValue);
-                    var_dump($subSubSubValue[$subSubKey]);
+                    //var_dump($subSubKey);
+                    //var_dump($subSubSubValue);
+                    //var_dump($subSubSubValue[$subSubKey]);
                     switch ($subKey) {
                         case '  + ':
                             $subLine = "Property '". $key . "." . $subSubKey . "' was added with value: " . processValue($subSubSubValue[$subSubKey]) . "\n";
@@ -193,7 +200,7 @@ function processArray2Plain($value)
             //    $subResult .= str_repeat(SPACE, $level) . "}\n";
             //    $level--;
             //    $subResult .= "Property '". $key . "." . $subSubKey . "' was added with value: " . processValue($subSubSubValue[$subSubKey]) . "\n";
-                var_dump($subResult);
+            //    var_dump($subResult);
                 }
             }
         }
@@ -214,7 +221,7 @@ function showPlain($value)
     return $result;
 }
 
-function showFormatted($differ, $formatName)
+/* function showFormatted($differ, $formatName)
 {
     switch ($formatName) {
         case 'plain':
@@ -226,13 +233,15 @@ function showFormatted($differ, $formatName)
         default:
             throw new \Exception("Unknown format: $formatName");
     }
-}
+} */
 
 function genDiff($fileName1, $fileName2, $formatName)
 {
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
-    $differ = checkArraysDifferences($file1Array, $file2Array);
+    $differ = findArraysDiff($file1Array, $file2Array);
+    var_dump($differ);
+    // $differ = checkArraysDifferences($file1Array, $file2Array);
     // $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
     $resultString = showFormatted($differ, $formatName);
     return $resultString;
