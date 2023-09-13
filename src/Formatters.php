@@ -2,7 +2,8 @@
 
 namespace GenDiff\Formatters;
 
-use function GenDiff\Formatters\Stylish\getStylishDiff;
+use function GenDiff\Formatters\Stylish\showStylishDiff;
+use function GenDiff\Formatters\Plain\showPlainDiff;
 
 function processValue($value)
 {
@@ -61,11 +62,11 @@ function showFormatted($differ, $formatName)
 {
     switch ($formatName) {
         case 'plain':
-           return  showPlain($differ);
+            return  showPlainDiff($differ);
         // case 'json':
         //    return showJson($differ);
         case 'stylish':
-            return getStylishDiff($differ);
+            return showStylishDiff($differ);
         default:
             throw new \Exception("Unknown format: $formatName");
     }

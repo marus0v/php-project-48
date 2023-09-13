@@ -7,20 +7,7 @@ const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
 
-function showStylish($value)
-{
-    $level = 0;
-    if (!is_array($value)) {
-        $result = processValue($value);
-    } else {
-        $result = "{\n";
-        $result .= processArray($value, $level);
-        $result .= "}";
-    }
-    return $result;
-}
-
-function showStylishDiff(array $diff, int $level = 0): string
+function formStylishDiff(array $diff, int $level = 0): string
 {
     $indent = str_repeat(SPACER, $level);
     $output = [];
@@ -53,7 +40,7 @@ function showStylishDiff(array $diff, int $level = 0): string
                 break;
             case 'nested':
                 $output[] = "{$indent}" . SPACE . "{$key}: {\n"
-                    . showStylishDiff($node['children'], $level + 1)
+                    . formStylishDiff($node['children'], $level + 1)
                     . "\n{$indent}" . SPACE . "}";
                 // var_dump($output);
                 break;
@@ -66,19 +53,20 @@ function showStylishDiff(array $diff, int $level = 0): string
                 break;
         }
     }
-    var_dump($output);
+    // var_dump($output);
     return implode("\n", $output);
+    // return $output;
 }
 
-function formatValue($value, int $depth): string
+function formatValue($value, int $level): string
 {
     if (is_array($value)) {
-        $formattedArray = array_map(function ($key, $val) use ($depth) {
-            $formattedValue = formatValue($val, $depth + 1);
-            $keyIndent = str_repeat(" ", $depth * 4);
-            return "{$keyIndent}    {$key}: {$formattedValue}";
+        $formattedArray = array_map(function ($key, $val) use ($level) {
+            $formattedValue = formatValue($val, $level + 1);
+            $keyIndent = str_repeat(SPACER, $level);
+            return "{$keyIndent}" . SPACE . "{$key}: {$formattedValue}";
         }, array_keys($value), $value);
-        return "{\n" . implode("\n", $formattedArray) . "\n" . str_repeat(" ", $depth * 4) . "}";
+        return "{\n" . implode("\n", $formattedArray) . "\n" . str_repeat(SPACER, $level) . "}";
     }
 
     if (is_null($value)) {
@@ -92,7 +80,9 @@ function formatValue($value, int $depth): string
     return trim($value, "'");
 }
 
-function getStylishDiff(array $diff): string
+function showStylishDiff(array $diff): string
 {
-    return "{\n" . showStylishDiff($diff) . "\n}";
+    // $stylishDiff = implode("\n", formStylishDiff($diff));
+    // var_dump($stylishDiff);
+    return "{\n" . formStylishDiff($diff) . "\n}";
 }

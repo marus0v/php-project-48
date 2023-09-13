@@ -161,65 +161,6 @@ function showStylish($value)
     return $result;
 }
 
-function processArray2Plain($value)
-{
-    // $subResult = "{\n";
-    $subResult = "";
-    $keysArray = array_keys($value);
-    foreach ($keysArray as $key) {
-        // var_dump($key);
-        // var_dump($level);
-        $subValue = $value[$key];
-        foreach ($subValue as $subKey => $subSubValue) {
-            // var_dump($value[$key]);
-            // var_dump($subKey);
-            // var_dump($subSubValue);
-            if (!is_array($subSubValue)) {
-                $subResult .= "Property '". $key . "." . $subKey . " was added with value: " . processValue($subSubSubValue) . "\n";
-                // var_dump($subResult);
-            } else {
-                //var_dump($key);
-                //var_dump($subKey);
-                //var_dump($subSubValue);
-                // var_dump($subSubValue[$subKey]);
-                foreach ($subSubValue as $subSubKey => $subSubSubValue) {
-                    //var_dump($subSubKey);
-                    //var_dump($subSubSubValue);
-                    //var_dump($subSubSubValue[$subSubKey]);
-                    switch ($subKey) {
-                        case '  + ':
-                            $subLine = "Property '". $key . "." . $subSubKey . "' was added with value: " . processValue($subSubSubValue[$subSubKey]) . "\n";
-                        case '  - ':
-                            $subLine = "Property '". $key . "." . $subSubKey . "' was removed\n";
-                        }
-                        $subResult .= $subLine;
-                // var_dump($level);
-            //    $subResult .= str_repeat(SPACE, $level) . $subKey . $key . ": {\n";
-                // $level++;
-            //    $subResult .= processArray($subSubSubValue, $level += 1);
-            //    $subResult .= str_repeat(SPACE, $level) . "}\n";
-            //    $level--;
-            //    $subResult .= "Property '". $key . "." . $subSubKey . "' was added with value: " . processValue($subSubSubValue[$subSubKey]) . "\n";
-            //    var_dump($subResult);
-                }
-            }
-        }
-    }
-    // $subResult .= "}";
-    return $subResult;
-}
-
-function showPlain($value)
-{
-    if (!is_array($value)) {
-        $result = processValue2Plain($value);
-    } else {
-        $result = "{\n";
-        $result .= processArray2Plain($value);
-        $result .= "}";
-    }
-    return $result;
-}
 
 /* function showFormatted($differ, $formatName)
 {
