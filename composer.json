@@ -29,6 +29,7 @@
             "src/Formatters.php",
             "src/Formatters/Stylish.php",
             "src/Formatters/Plain.php",
+            "src/Formatters/Json.php",
             "tests/gendiffTest.php"
         ]
     },

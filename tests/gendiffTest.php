@@ -5,6 +5,7 @@ namespace GenDiff\Tests;
 use PHPUnit\Framework\TestCase;
 use function GenDiff\GenDiff\genDiff;
 use function GenDiff\Formatters\showFormatted;
+use function GenDiff\Parser\getArrayFromJson;
 
 class GenDiffTest extends TestCase
 {
@@ -80,5 +81,106 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]
 }";
     $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain')); 
+  $expected4 = '{
+    "common": {
+        "status": "nested",
+        "children": {
+            "follow": {
+                "status": "added",
+                "value": false
+            },
+            "setting1": {
+                "status": "unchanged",
+                "value": "Value 1"
+            },
+            "setting2": {
+                "status": "removed",
+                "value": 200
+            },
+            "setting3": {
+                "status": "updated",
+                "oldValue": true,
+                "newValue": null
+            },
+            "setting4": {
+                "status": "added",
+                "value": "blah blah"
+            },
+            "setting5": {
+                "status": "added",
+                "value": {
+                    "key5": "value5"
+                }
+            },
+            "setting6": {
+                "status": "nested",
+                "children": {
+                    "doge": {
+                        "status": "nested",
+                        "children": {
+                            "wow": {
+                                "status": "updated",
+                                "oldValue": "",
+                                "newValue": "so much"
+                            }
+                        }
+                    },
+                    "key": {
+                        "status": "unchanged",
+                        "value": "value"
+                    },
+                    "ops": {
+                        "status": "added",
+                        "value": "vops"
+                    }
+                }
+            }
+        }
+    },
+    "group1": {
+        "status": "nested",
+        "children": {
+            "baz": {
+                "status": "updated",
+                "oldValue": "bas",
+                "newValue": "bars"
+            },
+            "foo": {
+                "status": "unchanged",
+                "value": "bar"
+            },
+            "nest": {
+                "status": "updated",
+                "oldValue": {
+                    "key": "value"
+                },
+                "newValue": "str"
+            }
+        }
+    },
+    "group2": {
+        "status": "removed",
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        }
+    },
+    "group3": {
+        "status": "added",
+        "value": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        }
+    }
+}';
+    // $expected4 = getArrayFromJson('./tests/fixtures/expected4.json');
+    // var_dump($expected4);
+    $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json')); 
     }
 }
