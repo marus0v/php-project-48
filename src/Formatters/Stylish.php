@@ -16,14 +16,14 @@ function formStylishDiff(array $diff, int $level = 0): string
             case 'added':
                 $formattedValue = formatValue($node['value'], $level + 1);
                 $formattedValue === ''
-                ? $output[] = "{$indent}" . ADD . "{$key}:"
+                ? $output[] = "{$indent}" . ADD . "{$key}: "
                 : $output[] = "{$indent}" . ADD . "{$key}: {$formattedValue}";
                 // var_dump($output);
                 break;
             case 'removed':
                 $formattedValue = formatValue($node['value'], $level + 1);
                 $formattedValue === ''
-                ? $output[] = "{$indent}" . SUB . "{$key}:"
+                ? $output[] = "{$indent}" . SUB . "{$key}: "
                 : $output[] = "{$indent}" . SUB . "{$key}: {$formattedValue}";
                 // var_dump($output);
                 break;
@@ -31,10 +31,10 @@ function formStylishDiff(array $diff, int $level = 0): string
                 $formattedOldValue = formatValue($node['oldValue'], $level + 1);
                 $formattedNewValue = formatValue($node['newValue'], $level + 1);
                 $formattedOldValue === ''
-                ? $output[] = "{$indent}" . SUB . "{$key}:"
+                ? $output[] = "{$indent}" . SUB . "{$key}: "
                 : $output[] = "{$indent}" . SUB . "{$key}: {$formattedOldValue}";
                 $formattedNewValue === ''
-                ? $output[] = "{$indent}" . ADD . "{$key}:"
+                ? $output[] = "{$indent}" . ADD . "{$key}: "
                 : $output[] = "{$indent}" . ADD . "{$key}: {$formattedNewValue}";
                 // var_dump($output);
                 break;
