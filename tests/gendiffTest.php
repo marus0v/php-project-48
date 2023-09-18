@@ -3,7 +3,7 @@
 namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Differ\GenDiff\genDiff;
+use function Differ\Differ\genDiff;
 use function Differ\Formatters\showFormatted;
 use function Differ\Parser\getArrayFromJson;
 
