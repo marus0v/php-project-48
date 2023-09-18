@@ -1,11 +1,11 @@
 <?php
 
-namespace GenDiff\GenDiff;
+namespace Differ\GenDiff;
 
 use Symfony\Component\Yaml\Yaml;
 
-use function GenDiff\Parser\parse;
-use function GenDiff\Formatters\showFormatted;
+use function Differ\Parser\parse;
+use function Differ\Formatters\showFormatted;
 
 function findArraysDiff(array $arr1, array $arr2): array
 {

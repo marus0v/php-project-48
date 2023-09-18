@@ -1,17 +1,17 @@
 <?php
 
-namespace GenDiff\Tests;
+namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function GenDiff\GenDiff\genDiff;
-use function GenDiff\Formatters\showFormatted;
-use function GenDiff\Parser\getArrayFromJson;
+use function Differ\GenDiff\genDiff;
+use function Differ\Formatters\showFormatted;
+use function Differ\Parser\getArrayFromJson;
 
 class GenDiffTest extends TestCase
 {
     public function testGenDiff(): void
     {
-    $expected1 = "{
+        $expected1 = "{
   - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
@@ -19,9 +19,9 @@ class GenDiffTest extends TestCase
   + timeout: 20
   + verbose: true
 }";
-    $this->assertEquals($expected1, genDiff('./src/file1.json', './src/file2.json', 'stylish'));
-    $this->assertEquals($expected1, genDiff('./src/file1.yml', './src/file2.yml', 'stylish'));
-    $expected2 = "{
+        $this->assertEquals($expected1, genDiff('./src/file1.json', './src/file2.json', 'stylish'));
+        $this->assertEquals($expected1, genDiff('./src/file1.yml', './src/file2.yml', 'stylish'));
+        $expected2 = "{
     common: {
       + follow: false
         setting1: Value 1
@@ -65,9 +65,9 @@ class GenDiffTest extends TestCase
         fee: 100500
     }
 }";
-    $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json', 'stylish'));
-    $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml', 'stylish'));
-  $expected3 = "{
+        $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json', 'stylish'));
+        $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml', 'stylish'));
+        $expected3 = "{
 Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -80,8 +80,8 @@ Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]
 }";
-    $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain')); 
-  $expected4 = '{
+        $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain')); 
+        $expected4 = '{
     "common": {
         "status": "nested",
         "children": {
@@ -179,8 +179,6 @@ Property 'group3' was added with value: [complex value]
         }
     }
 }';
-    // $expected4 = getArrayFromJson('./tests/fixtures/expected4.json');
-    // var_dump($expected4);
-    $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json')); 
+        $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json')); 
     }
 }

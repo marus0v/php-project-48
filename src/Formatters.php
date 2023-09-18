@@ -1,10 +1,10 @@
 <?php
 
-namespace GenDiff\Formatters;
+namespace Differ\Formatters;
 
-use function GenDiff\Formatters\Stylish\showStylishDiff;
-use function GenDiff\Formatters\Plain\showPlainDiff;
-use function GenDiff\Formatters\Json\showJsonDiff;
+use function Differ\Formatters\Stylish\showStylishDiff;
+use function Differ\Formatters\Plain\showPlainDiff;
+use function Differ\Formatters\Json\showJsonDiff;
 
 function showFormatted($differ, $formatName)
 {

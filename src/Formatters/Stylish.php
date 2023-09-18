@@ -1,6 +1,6 @@
 <?php
 
-namespace GenDiff\Formatters\Stylish;
+namespace Differ\Formatters\Stylish;
 
 const SPACER = '    ';
 const SPACE = '    ';
