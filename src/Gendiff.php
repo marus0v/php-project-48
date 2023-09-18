@@ -37,14 +37,11 @@ function findArraysDiff(array $arr1, array $arr2): array
     return $result;
 }
 
-function genDiff($fileName1, $fileName2, $formatName = 'Stylish')
+function genDiff($fileName1, $fileName2, $formatName = 'stylish')
 {
     $file1Array = parse($fileName1);
     $file2Array = parse($fileName2);
     $differ = findArraysDiff($file1Array, $file2Array);
-    // var_dump($differ);
-    // $differ = checkArraysDifferences($file1Array, $file2Array);
-    // $resultString = stringify(checkArraysDifferences($file1Array, $file2Array));
     $resultString = showFormatted($differ, $formatName);
     return $resultString;
 }
