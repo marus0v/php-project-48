@@ -18,14 +18,12 @@ function formStylishDiff(array $diff, int $level = 0): string
                 $formattedValue === ''
                 ? $output[] = "{$indent}" . ADD . "{$key}: "
                 : $output[] = "{$indent}" . ADD . "{$key}: {$formattedValue}";
-                // var_dump($output);
                 break;
             case 'removed':
                 $formattedValue = formatValue($node['value'], $level + 1);
                 $formattedValue === ''
                 ? $output[] = "{$indent}" . SUB . "{$key}: "
                 : $output[] = "{$indent}" . SUB . "{$key}: {$formattedValue}";
-                // var_dump($output);
                 break;
             case 'updated':
                 $formattedOldValue = formatValue($node['oldValue'], $level + 1);
@@ -36,20 +34,17 @@ function formStylishDiff(array $diff, int $level = 0): string
                 $formattedNewValue === ''
                 ? $output[] = "{$indent}" . ADD . "{$key}: "
                 : $output[] = "{$indent}" . ADD . "{$key}: {$formattedNewValue}";
-                // var_dump($output);
                 break;
             case 'nested':
                 $output[] = "{$indent}" . SPACE . "{$key}: {\n"
                     . formStylishDiff($node['children'], $level + 1)
                     . "\n{$indent}" . SPACE . "}";
-                // var_dump($output);
                 break;
             case 'unchanged':
                 $formattedValue = formatValue($node['value'], $level + 1);
                 $formattedValue === ''
                 ? $output[] = "{$indent}" . SPACE . "{$key}:"
                 : $output[] = "{$indent}" . SPACE . "{$key}: {$formattedValue}";
-                // var_dump($output);
                 break;
         }
     }

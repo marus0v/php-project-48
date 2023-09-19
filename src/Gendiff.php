@@ -13,9 +13,7 @@ function findArraysDiff(array $arr1, array $arr2): array
     $arrayKeys2 = array_keys($arr2);
     $keyArray = array_unique(array_merge($arrayKeys1, $arrayKeys2));
     sort($keyArray);
-
     $result = [];
-
     foreach ($keyArray as $key) {
         if (!array_key_exists($key, $arr1)) {
             $result[$key] = ['status' => 'added', 'value' => $arr2[$key]];
@@ -33,7 +31,6 @@ function findArraysDiff(array $arr1, array $arr2): array
             $result[$key] = ['status' => 'unchanged', 'value' => $arr1[$key]];
         }
     }
-
     return $result;
 }
 

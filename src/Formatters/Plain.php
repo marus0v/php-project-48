@@ -56,6 +56,5 @@ function formatValue(mixed $value)
 
 function showPlainDiff(array $diff): string
 {
-    $plainDiff = formPlainDiff($diff);
-    return implode("\n", $plainDiff);
+    return implode("\n", formPlainDiff($diff));
 }
