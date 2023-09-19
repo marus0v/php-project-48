@@ -38,6 +38,6 @@ $fileName1 = $args['<firstFile>'];
 $fileName2 = $args['<secondFile>'];
 $formatName = $args['--format'];
 
-genDiff($pathToFile1, $pathToFile2);
+genDiff($fileName1, $fileName2);
 
 // print_r('Hello, Gendiff');
