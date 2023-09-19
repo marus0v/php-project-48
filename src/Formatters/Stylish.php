@@ -7,6 +7,11 @@ const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
 
+function strbool($value)
+{
+    return $value ? 'true' : 'false';
+}
+
 function formStylishDiff(array $diff, int $level = 0): string
 {
     $indent = str_repeat(SPACER, $level);
@@ -55,6 +60,7 @@ function formStylishDiff(array $diff, int $level = 0): string
 
 function formatValue($value, int $level): string
 {
+    // $result = '';
     if (is_array($value)) {
         $formattedArray = array_map(function ($key, $val) use ($level) {
             $formattedValue = formatValue($val, $level + 1);
@@ -62,17 +68,14 @@ function formatValue($value, int $level): string
             return "{$keyIndent}" . SPACE . "{$key}: {$formattedValue}";
         }, array_keys($value), $value);
         return "{\n" . implode("\n", $formattedArray) . "\n" . str_repeat(SPACER, $level) . "}";
-    }
-
-    if (is_null($value)) {
+    } elseif (is_null($value)) {
         return 'null';
-    }
-
-    if (is_bool($value)) {
+    } elseif (is_bool($value)) {
         return $value ? 'true' : 'false';
+        // $result = strbool($value);;
     }
-
     return trim($value, "'");
+    // return $result;
 }
 
 function showStylishDiff(array $diff): string

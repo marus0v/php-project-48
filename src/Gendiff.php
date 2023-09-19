@@ -36,9 +36,13 @@ function findArraysDiff(array $arr1, array $arr2): array
 
 function genDiff($fileName1, $fileName2, $formatName = 'stylish')
 {
-    $file1Array = parse($fileName1);
-    $file2Array = parse($fileName2);
-    $differ = findArraysDiff($file1Array, $file2Array);
-    $resultString = showFormatted($differ, $formatName);
-    return $resultString;
+    try {
+        $file1Array = parse($fileName1);
+        $file2Array = parse($fileName2);
+        $differ = findArraysDiff($file1Array, $file2Array);
+        $resultString = showFormatted($differ, $formatName);
+        return $resultString;
+    } catch (\Throwable $ex) {
+        var_dump($ex->getMessage());
+    }
 }
