@@ -7,7 +7,7 @@ const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
 
-function strbool($value)
+function strbool(mixed $value): string
 {
     return $value ? 'true' : 'false';
 }
@@ -58,7 +58,7 @@ function formStylishDiff(array $diff, int $level = 0): string
     // return $output;
 }
 
-function formatValue($value, int $level): string
+function formatValue(mixed $value, int $level): string
 {
     // $result = '';
     if (is_array($value)) {

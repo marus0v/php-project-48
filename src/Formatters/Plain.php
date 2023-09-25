@@ -2,7 +2,7 @@
 
 namespace Differ\Formatters\Plain;
 
-function formPlainDiff($value, array $parentKeys = [])
+function formPlainDiff($value, array $parentKeys = []): string
 {
     $output = [];
 
@@ -33,7 +33,7 @@ function formPlainDiff($value, array $parentKeys = [])
     return $output;
 }
 
-function formatValue(mixed $value)
+function formatValue(mixed $value): string
 {
     if (is_array($value)) {
         return '[complex value]';
