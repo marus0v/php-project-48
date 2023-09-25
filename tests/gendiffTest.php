@@ -3,6 +3,7 @@
 namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\genDiff;
 use function Differ\Formatters\showFormatted;
 use function Differ\Parser\getArrayFromJson;
@@ -78,7 +79,7 @@ Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]";
-        $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain')); 
+        $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain'));
         $expected4 = '{
     "common": {
         "status": "nested",
@@ -177,6 +178,6 @@ Property 'group3' was added with value: [complex value]";
         }
     }
 }';
-        $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json')); 
+        $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json'));
     }
 }
