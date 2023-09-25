@@ -2,7 +2,7 @@
 
 namespace Differ\Formatters\Plain;
 
-function formPlainDiff($value, array $parentKeys = []): string
+function formPlainDiff(mixed $value, array $parentKeys = []): array
 {
     $output = [];
 
