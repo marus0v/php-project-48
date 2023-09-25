@@ -7,7 +7,7 @@ const SPACE = '    ';
 const ADD = '  + ';
 const SUB = '  - ';
 
-function strbool(mixed $value): string
+function strbool(bool $value): string
 {
     return $value ? 'true' : 'false';
 }
