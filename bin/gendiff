@@ -29,7 +29,7 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOC;
 
-require('./vendor/docopt/docopt/src/docopt.php');
+// require('./vendor/docopt/docopt/src/docopt.php');
 // $argc = Docopt::handle($doc);
 $args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
 
