@@ -6,7 +6,7 @@ use function Differ\Formatters\Stylish\showStylishDiff;
 use function Differ\Formatters\Plain\showPlainDiff;
 use function Differ\Formatters\Json\showJsonDiff;
 
-function showFormatted($differ, $formatName)
+function showFormatted(array $differ, string $formatName): string
 {
     switch ($formatName) {
         case 'plain':
