@@ -20,15 +20,17 @@ function formStylishDiff(array $diff, int $level = 0): string
         switch ($node['status']) {
             case 'added':
                 $formattedValue = formatValue($node['value'], $level + 1);
-                $formattedValue === ''
-                ? $output[] = "{$indent}" . ADD . "{$key}: "
-                : $output[] = "{$indent}" . ADD . "{$key}: {$formattedValue}";
+                // $formattedValue === ''
+                // ? $output[] = "{$indent}" . ADD . "{$key}: "
+                // : $output[] = "{$indent}" . ADD . "{$key}: {$formattedValue}";
+                $output[] = "{$indent}" . ADD . "{$key}: {$formattedValue}";
                 break;
             case 'removed':
                 $formattedValue = formatValue($node['value'], $level + 1);
-                $formattedValue === ''
-                ? $output[] = "{$indent}" . SUB . "{$key}: "
-                : $output[] = "{$indent}" . SUB . "{$key}: {$formattedValue}";
+                // $formattedValue === ''
+                // ? $output[] = "{$indent}" . SUB . "{$key}: "
+                // : $output[] = "{$indent}" . SUB . "{$key}: {$formattedValue}";
+                $output[] = "{$indent}" . SUB . "{$key}: {$formattedValue}";
                 break;
             case 'updated':
                 $formattedOldValue = formatValue($node['oldValue'], $level + 1);
