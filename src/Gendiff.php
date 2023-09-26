@@ -34,7 +34,7 @@ function findArraysDiff(array $arr1, array $arr2): array
     return $result;
 }
 
-function genDiff($fileName1, $fileName2, $formatName = 'stylish')
+function genDiff(string $fileName1, string $fileName2, string $formatName = 'stylish')
 {
     try {
         $file1Array = parse($fileName1);
