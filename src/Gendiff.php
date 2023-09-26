@@ -12,7 +12,11 @@ function findArraysDiff(array $arr1, array $arr2): array
     $arrayKeys1 = array_keys($arr1);
     $arrayKeys2 = array_keys($arr2);
     $keyArray = array_unique(array_merge($arrayKeys1, $arrayKeys2));
-    sort($keyArray);
+    // sort($keyArray);
+    // $sortedKeysArray = usort($keyArray, fn($a, $b) => strcmp($a, $b));
+    usort($keyArray, fn($a, $b) => strcmp($a, $b));
+    // var_dump($sortedKeysArray);
+    // var_dump($keyArray);
     $result = [];
     foreach ($keyArray as $key) {
         if (!array_key_exists($key, $arr1)) {
