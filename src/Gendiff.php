@@ -77,7 +77,7 @@ function findArraysDiff(array $arr1, array $arr2): array
 
 function genDiff(string $fileName1, string $fileName2, string $formatName = 'stylish')
 {
-    try {
+    /* try {
         $file1Array = parse($fileName1);
         $file2Array = parse($fileName2);
         $differ = findArraysDiff($file1Array, $file2Array);
@@ -85,5 +85,10 @@ function genDiff(string $fileName1, string $fileName2, string $formatName = 'sty
         return $resultString;
     } catch (\Throwable $ex) {
         var_dump($ex->getMessage());
-    }
+    } */
+    $file1Array = parse($fileName1);
+    $file2Array = parse($fileName2);
+    $differ = findArraysDiff($file1Array, $file2Array);
+    $resultString = showFormatted($differ, $formatName);
+    return $resultString;
 }

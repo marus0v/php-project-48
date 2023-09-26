@@ -94,7 +94,7 @@ function formStylishDiff(array $diff, int $level = 0): string
 function stringify(mixed $value, int $level): string
 {
     if (!is_array($value)) {
-        return formatValue($value, $level);
+        return formatValue($value);
     }
 
     $indent = getIndent($level);
