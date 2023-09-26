@@ -2,9 +2,11 @@
 
 namespace Differ\Formatters\Plain;
 
-function formPlainDiff(mixed $value, array $parentKeys = []): array
+use function Functional\flatten;
+
+function formPlainDiff(array $diff, array $parentKeys = []): array
 {
-    $output = [];
+    /* $output = [];
 
     foreach ($value as $key => $node) {
         $currentKeys = [...$parentKeys, $key];
@@ -30,7 +32,29 @@ function formPlainDiff(mixed $value, array $parentKeys = []): array
         }
     }
 
-    return $output;
+    return $output; */
+    return array_map(function ($node) use ($parentKeys) {
+        $key = $node['key'];
+        $currentKeys = [...$parentKeys, $key];
+        $propertyPath = implode('.', $currentKeys);
+
+        switch ($node['status']) {
+            case 'added':
+                $formattedValue = formatValue($node['value']);
+                return ["Property '$propertyPath' was added with value: $formattedValue"];
+            case 'removed':
+                return ["Property '$propertyPath' was removed"];
+            case 'nested':
+                return formPlainDiff($node['children'], $currentKeys);
+            case 'updated':
+                $formattedOldValue = formatValue($node['oldValue']);
+                $formattedNewValue = formatValue($node['newValue']);
+                return ["Property '$propertyPath' was updated. From $formattedOldValue to $formattedNewValue"];
+            case 'unchanged':
+                return [];
+        }
+    }, $diff);
+
 }
 
 function formatValue(mixed $value): string
@@ -56,5 +80,5 @@ function formatValue(mixed $value): string
 
 function showPlainDiff(array $diff): string
 {
-    return implode("\n", formPlainDiff($diff));
+    return implode("\n", flatten(formPlainDiff($diff)));
 }

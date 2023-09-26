@@ -80,84 +80,101 @@ Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]";
         $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain'));
-        $expected4 = '{
-    "common": {
+        $expected4 = '[
+    {
+        "key": "common",
         "status": "nested",
-        "children": {
-            "follow": {
+        "children": [
+            {
+                "key": "follow",
                 "status": "added",
                 "value": false
             },
-            "setting1": {
+            {
+                "key": "setting1",
                 "status": "unchanged",
                 "value": "Value 1"
             },
-            "setting2": {
+            {
+                "key": "setting2",
                 "status": "removed",
                 "value": 200
             },
-            "setting3": {
+            {
+                "key": "setting3",
                 "status": "updated",
                 "oldValue": true,
                 "newValue": null
             },
-            "setting4": {
+            {
+                "key": "setting4",
                 "status": "added",
                 "value": "blah blah"
             },
-            "setting5": {
+            {
+                "key": "setting5",
                 "status": "added",
                 "value": {
                     "key5": "value5"
                 }
             },
-            "setting6": {
+            {
+                "key": "setting6",
                 "status": "nested",
-                "children": {
-                    "doge": {
+                "children": [
+                    {
+                        "key": "doge",
                         "status": "nested",
-                        "children": {
-                            "wow": {
+                        "children": [
+                            {
+                                "key": "wow",
                                 "status": "updated",
                                 "oldValue": "",
                                 "newValue": "so much"
                             }
-                        }
+                        ]
                     },
-                    "key": {
+                    {
+                        "key": "key",
                         "status": "unchanged",
                         "value": "value"
                     },
-                    "ops": {
+                    {
+                        "key": "ops",
                         "status": "added",
                         "value": "vops"
                     }
-                }
+                ]
             }
-        }
+        ]
     },
-    "group1": {
+    {
+        "key": "group1",
         "status": "nested",
-        "children": {
-            "baz": {
+        "children": [
+            {
+                "key": "baz",
                 "status": "updated",
                 "oldValue": "bas",
                 "newValue": "bars"
             },
-            "foo": {
+            {
+                "key": "foo",
                 "status": "unchanged",
                 "value": "bar"
             },
-            "nest": {
+            {
+                "key": "nest",
                 "status": "updated",
                 "oldValue": {
                     "key": "value"
                 },
                 "newValue": "str"
             }
-        }
+        ]
     },
-    "group2": {
+    {
+        "key": "group2",
         "status": "removed",
         "value": {
             "abc": 12345,
@@ -166,7 +183,8 @@ Property 'group3' was added with value: [complex value]";
             }
         }
     },
-    "group3": {
+    {
+        "key": "group3",
         "status": "added",
         "value": {
             "deep": {
@@ -177,7 +195,7 @@ Property 'group3' was added with value: [complex value]";
             "fee": 100500
         }
     }
-}';
+]';
         $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json'));
     }
 }

@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use Symfony\Component\Yaml\Yaml;
 
+use function Functional\sort;
 use function Differ\Parser\parse;
 use function Differ\Formatters\showFormatted;
 
@@ -13,12 +14,48 @@ function findArraysDiff(array $arr1, array $arr2): array
     $arrayKeys2 = array_keys($arr2);
     $keyArray = array_unique(array_merge($arrayKeys1, $arrayKeys2));
     // sort($keyArray);
-    // $sortedKeysArray = usort($keyArray, fn($a, $b) => strcmp($a, $b));
-    usort($keyArray, fn($a, $b) => strcmp($a, $b));
+    $sortedKeysArray = sort($keyArray, fn($a, $b) => strcmp($a, $b));
+    // usort($keyArray, fn($a, $b) => strcmp($a, $b));
     // var_dump($sortedKeysArray);
     // var_dump($keyArray);
-    $result = [];
-    foreach ($keyArray as $key) {
+    $result = array_map(function ($key) use ($arr1, $arr2) {
+        if (!array_key_exists($key, $arr1)) {
+            return [
+                'key' => $key,
+                'status' => 'added',
+                'value' => $arr2[$key]
+            ];
+        } elseif (!array_key_exists($key, $arr2)) {
+            return [
+                'key' => $key,
+                'status' => 'removed',
+                'value' => $arr1[$key]
+            ];
+        } elseif (is_array($arr1[$key]) && is_array($arr2[$key])) {
+            return [
+                'key' => $key,
+                'status' => 'nested',
+                'children' => findArraysDiff($arr1[$key], $arr2[$key])
+            ];
+        } elseif ($arr1[$key] !== $arr2[$key]) {
+            return [
+                'key' => $key,
+                'status' => 'updated',
+                'oldValue' => $arr1[$key],
+                'newValue' => $arr2[$key],
+            ];
+        } else {
+            return [
+                'key' => $key,
+                'status' => 'unchanged',
+                'value' => $arr1[$key]
+            ];
+        }
+    }, $sortedKeysArray);
+    // var_dump($result);
+    return $result;
+    /* $result = [];
+    foreach ($sortedKeysArray as $key) {
         if (!array_key_exists($key, $arr1)) {
             $result[$key] = ['status' => 'added', 'value' => $arr2[$key]];
         } elseif (!array_key_exists($key, $arr2)) {
@@ -35,7 +72,7 @@ function findArraysDiff(array $arr1, array $arr2): array
             $result[$key] = ['status' => 'unchanged', 'value' => $arr1[$key]];
         }
     }
-    return $result;
+    return $result; */
 }
 
 function genDiff(string $fileName1, string $fileName2, string $formatName = 'stylish')
