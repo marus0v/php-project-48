@@ -54,7 +54,6 @@ function formPlainDiff(array $diff, array $parentKeys = []): array
                 return [];
         }
     }, $diff);
-
 }
 
 function formatValue(mixed $value): string
