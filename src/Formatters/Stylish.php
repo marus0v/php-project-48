@@ -41,10 +41,7 @@ function formStylishDiff(array $diff, int $level = 0): string
                 return "$indent" . SPACER . "$key: $formattedValue";
         }
     }, $diff);
-    // var_dump(implode("\n", $output));
     return implode("\n", $output);
-    // var_dump($output);
-    // return $output;
 }
 
 function stringify(mixed $value, int $level): string
@@ -75,8 +72,5 @@ function formatValue(mixed $value): string
 
 function showStylishDiff(array $diff): string
 {
-    // $stylishDiff = implode("\n", formStylishDiff($diff));
-    // var_dump($stylishDiff);
     return "{\n" . formStylishDiff($diff) . "\n}";
-    // return "{\n" . $stylishDiff . "\n}";
 }
