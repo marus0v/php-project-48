@@ -4,9 +4,18 @@ namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
+function getFileData(string $fileName): string
+{
+    if (!file_exists($fileName)) {
+        return throw new \Exception("File not found: '$fileName'");
+    }
+
+    return file_get_contents($fileName);
+}
+
 function getArrayFromJson(string $fileName)
 {
-    $file = file_get_contents($fileName);
+    $file = getFileData($fileName);
     return $fileArray = json_decode($file, true);
 }
 
