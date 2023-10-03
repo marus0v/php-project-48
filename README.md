@@ -27,8 +27,9 @@ $ make install
 ```
 
 ### Asciinemas
+#### 1 level json files
+[![asciicast](https://asciinema.org/a/metGJmY5v92s5I4Qdr74ePb2h.svg)](https://asciinema.org/a/metGJmY5v92s5I4Qdr74ePb2h)
 
-[![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW)
 [![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW) - step 6
 [![asciicast](https://asciinema.org/a/1K1HFcy1syQQfRc5cBSCmjZwx.svg)](https://asciinema.org/a/1K1HFcy1syQQfRc5cBSCmjZwx) - step 7
 [![asciicast](https://asciinema.org/a/TIByyQbHOQk61299NuBZgVxpu.svg)](https://asciinema.org/a/TIByyQbHOQk61299NuBZgVxpu) - step 8
