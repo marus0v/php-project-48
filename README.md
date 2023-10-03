@@ -18,10 +18,11 @@ Features:
 * Composer >= 2.5.5
 
 ### Setup
-
+'''
 $ git clone https://github.com/marus0v/php-project-48
 $ cd php-project-48
 $ make install
+'''
 
 [![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW)
 [![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW) - step 6
