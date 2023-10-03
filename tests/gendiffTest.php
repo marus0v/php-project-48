@@ -20,8 +20,8 @@ class GenDiffTest extends TestCase
   + timeout: 20
   + verbose: true
 }";
-        $this->assertEquals($expected1, genDiff('./src/file1.json', './src/file2.json', 'stylish'));
-        $this->assertEquals($expected1, genDiff('./src/file1.yml', './src/file2.yml', 'stylish'));
+        $this->assertEquals($expected1, genDiff('./tests/fixtures/file1.json', './tests/fixtures/file2.json', 'stylish'));
+        $this->assertEquals($expected1, genDiff('./tests/fixtures/file1.yml', './tests/fixtures/file2.yml', 'stylish'));
         $expected2 = "{
     common: {
       + follow: false
@@ -66,8 +66,8 @@ class GenDiffTest extends TestCase
         fee: 100500
     }
 }";
-        $this->assertEquals($expected2, genDiff('./src/file3.json', './src/file4.json', 'stylish'));
-        $this->assertEquals($expected2, genDiff('./src/file3.yml', './src/file4.yml', 'stylish'));
+        $this->assertEquals($expected2, genDiff('./tests/fixtures/file3.json', './tests/fixtures/file4.json', 'stylish'));
+        $this->assertEquals($expected2, genDiff('./tests/fixtures/file3.yml', './tests/fixtures/file4.yml', 'stylish'));
         $expected3 = "Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -79,7 +79,7 @@ Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]";
-        $this->assertEquals($expected3, genDiff('./src/file3.json', './src/file4.json', 'plain'));
+        $this->assertEquals($expected3, genDiff('./tests/fixtures/file3.json', './tests/fixtures/file4.json', 'plain'));
         $expected4 = '[
     {
         "key": "common",
@@ -196,6 +196,6 @@ Property 'group3' was added with value: [complex value]";
         }
     }
 ]';
-        $this->assertEquals($expected4, genDiff('./src/file3.json', './src/file4.json', 'json'));
+        $this->assertEquals($expected4, genDiff('./tests/fixtures/file3.json', './tests/fixtures/file4.json', 'json'));
     }
 }
