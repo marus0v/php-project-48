@@ -5,6 +5,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5b4c8096da0a76b62758/test_coverage)](https://codeclimate.com/github/marus0v/php-project-48/test_coverage)
 
 ### About
+
 Difference Calculator is a program that determines the difference between two data structures.
 
 Features:
@@ -17,12 +18,15 @@ Features:
 * PHP >= 8.1
 * Composer >= 2.5.5
 
+
 ### Setup
 ```
 $ git clone https://github.com/marus0v/php-project-48
 $ cd php-project-48
 $ make install
 ```
+
+### Asciinemas
 
 [![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW)
 [![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW) - step 6
