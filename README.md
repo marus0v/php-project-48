@@ -30,7 +30,12 @@ $ make install
 #### 1 level json files
 [![asciicast](https://asciinema.org/a/metGJmY5v92s5I4Qdr74ePb2h.svg)](https://asciinema.org/a/metGJmY5v92s5I4Qdr74ePb2h)
 
-[![asciicast](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW.svg)](https://asciinema.org/a/3XonQqARnKz8osNZ3zzGEwEDW) - step 6
-[![asciicast](https://asciinema.org/a/1K1HFcy1syQQfRc5cBSCmjZwx.svg)](https://asciinema.org/a/1K1HFcy1syQQfRc5cBSCmjZwx) - step 7
-[![asciicast](https://asciinema.org/a/TIByyQbHOQk61299NuBZgVxpu.svg)](https://asciinema.org/a/TIByyQbHOQk61299NuBZgVxpu) - step 8
+#### json/yml files, nested representation
+[![asciicast](https://asciinema.org/a/J5ITN9pKmXTejIOMRP4dPlcbG.svg)](https://asciinema.org/a/J5ITN9pKmXTejIOMRP4dPlcbG)
+
+#### json/yml files, plain representation
+[![asciicast](https://asciinema.org/a/YoEefxbKTvzXZqtY0bxr0ZG61.svg)](https://asciinema.org/a/YoEefxbKTvzXZqtY0bxr0ZG61)
+
+#### json/yml files, json representation
+[![asciicast](https://asciinema.org/a/hXXo4VEUzfYdnjjcwoxi3KgMO.svg)](https://asciinema.org/a/hXXo4VEUzfYdnjjcwoxi3KgMO)
 
